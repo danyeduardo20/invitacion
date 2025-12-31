@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Invitación</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- EmailJS CDN (opcional): si quieres envío automático, registra una cuenta y pon los IDs abajo -->
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  </head>
+  <body>
+    <main class="invitation-container">
+      <section class="card">
+        <h1 class="invite-title">¿Te gustaría salir conmigo, Leyla?</h1>
+        <p class="invite-text">Hola <strong>Leyla</strong>, a ver si asi podemos salir, que viendo la cosa antes de fin de año ya no sera</p>
+
+        <div class="details">
+          <p><strong>Propuesta 1:</strong> Airbnb (consulte detalles con el creador luego (yo))</p>
+          <p><strong>Propuesta 2:</strong> no se la verdad cualquier plan solo quiero verte</p>
+          <p><strong>Fecha:</strong> cuando puedas, la ocupada casi siempre sos vos</p>
+          <p><strong>Lugar:</strong> ( de la propuesta 2) unos huevos poche o lo que quieras</p>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="yesBtn">Sí</button>
+          <button class="btn" id="noBtn">Tambien si, no tenes opcion</button>
+        </div>
+
+        <p class="note">Puedes reconocer los conocimientos del creador de esta pagina que la hizo como en 1 hora btw</p>
+
+        <hr style="margin-top:18px; border:none; border-top:1px solid #f0e7ea" />
+        <div style="font-size:.9rem; color:var(--muted); margin-top:10px">
+          <strong>Envío automático al organizador:</strong>
+          <p>La respuesta se enviará a <code>danyeduardo579@gmail.com</code>. </p>
+        </div>
+      </section>
+    </main>
+
+    <script>
+  // CONFIG: credenciales proporcionadas por el usuario (EmailJS)
+  const EMAILJS_USER_ID = 'EF1utHq8ZYlm70331'; // Public Key / User ID
+  const EMAILJS_SERVICE_ID = 'service_ruoe0tb'; // Service ID (confirmado desde la captura)
+  const EMAILJS_TEMPLATE_ID = 'template_c0llsrw'; // Template ID
+      const RECEIVER_EMAIL = 'danyeduardo579@gmail.com';
+
+      function fallbackMailto(answer) {
+        const subject = encodeURIComponent('RSVP: ' + answer);
+        const body = encodeURIComponent(`Respuesta: ${answer}%0D%0A\nInvitación: ¿Te gustaría salir conmigo?`);
+        window.location.href = `mailto:${RECEIVER_EMAIL}?subject=${subject}&body=${body}`;
+      }
+
+      function sendWithEmailJS(answer) {
+        if (!window.emailjs) {
+          console.warn('EmailJS no está disponible en este navegador, usando mailto como fallback.');
+          fallbackMailto(answer);
+          return;
+        }
+        try {
+          emailjs.init(EMAILJS_USER_ID);
+        } catch (e) {
+          console.warn('No se pudo inicializar EmailJS, fallback a mailto.', e);
+        }
+        const templateParams = {
+          to_email: RECEIVER_EMAIL,
+          response: answer,
+          message: `Respuesta desde invitación: ${answer}`
+        };
+        // Algunas versiones de EmailJS aceptan el user ID como cuarto parámetro.
+        // También añadimos más logging para depurar en la consola.
+        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams, EMAILJS_USER_ID)
+          .then(function(response) {
+            console.log('EmailJS success:', response);
+            alert('Respuesta enviada correctamente. ¡Gracias!');
+          })
+          .catch(function(err) {
+            console.error('EmailJS error (detallado):', err);
+            // Mostrar más detalle al usuario en la consola y usar fallback a mailto
+            alert('Error al enviar automáticamente. Se abrirá el correo como alternativa. Revisa la consola para más detalles.');
+            fallbackMailto(answer);
+          });
+      }
+
+      function handleAnswer(answer) {
+        // Si el usuario completó las credenciales de EmailJS, usar EmailJS; si no, abrir mailto
+        if (EMAILJS_USER_ID && EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID) {
+          sendWithEmailJS(answer);
+        } else {
+          // alternativa: abrir cliente de correo con dirección ya puesta
+          fallbackMailto(answer);
+        }
+      }
+
+      document.getElementById('yesBtn').addEventListener('click', function () {
+        handleAnswer('Sí');
+      });
+      document.getElementById('noBtn').addEventListener('click', function () {
+        handleAnswer('No');
+      });
+    </script>
+  </body>
+</html>
+

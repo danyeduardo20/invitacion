@@ -1,0 +1,85 @@
+/* Estilos básicos y diseño para la invitación */
+:root{
+  --bg1:#fff7f2;
+  --bg2:#fff1f7;
+  --card:#ffffff;
+  --accent:#ff7aa2;
+  --muted:#666;
+}
+*{box-sizing:border-box}
+body{
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  margin:0;
+  min-height:100vh;
+  background: linear-gradient(135deg,var(--bg1) 0%, var(--bg2) 100%);
+  color: #222;
+  display:flex;
+  flex-direction:column;
+}
+
+/* NAV */
+.top-nav{display:flex; justify-content:space-between; align-items:center; padding:14px 28px}
+.top-nav.shadow{backdrop-filter: blur(6px)}
+.nav-brand{font-weight:800; color:var(--accent); text-decoration:none; font-size:1.1rem}
+.nav-right{display:flex; gap:16px}
+.nav-link{color:#333; text-decoration:none; padding:8px 12px; border-radius:8px; transition:all .16s}
+.nav-link:hover{background:rgba(255,122,162,0.08); transform:translateY(-2px)}
+
+/* HERO */
+.hero{position:relative; padding:48px 24px; display:flex; align-items:center; justify-content:space-between; gap:20px}
+.hero-content{max-width:720px}
+.hero-title{margin:0 0 8px 0; font-size:2rem}
+.hero-sub{margin:0 0 18px 0; color:var(--muted)}
+.hero-ctas{display:flex; gap:10px}
+.hero-decor{position:absolute; right:20px; top:8px; opacity:.95}
+
+.container{padding:24px}
+.center{text-align:center}
+
+.btn{display:inline-block; padding:10px 18px; border-radius:10px; background:transparent; border:1px solid rgba(0,0,0,0.06); text-decoration:none; color:#222; cursor:pointer}
+.btn-primary{background:var(--accent); color:white; border:none}
+
+/* Info cards */
+.info-cards{display:flex; gap:16px; justify-content:center; margin-top:14px}
+.card{background:var(--card); padding:18px; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.06); max-width:320px}
+.card.soft{background:linear-gradient(180deg,#fff,#fff8fb)}
+
+/* Invitación */
+.invitation-container{display:flex; align-items:center; justify-content:center; padding:40px; flex:1}
+.invite-title{margin:0 0 12px 0; font-size:1.6rem; color:#222}
+.invite-text{margin:0 0 16px 0; color:var(--muted)}
+.details{background:#fff6f9; padding:12px; border-radius:10px; margin-bottom:16px; color:#444}
+.actions{display:flex; gap:10px}
+.note{font-size:0.9rem; color:var(--muted); margin-top:14px}
+
+.footer{padding:18px; text-align:center; color:#666}
+
+@media (max-width:880px){
+  .hero{flex-direction:column; align-items:flex-start}
+  .hero-decor{position:static; align-self:end; width:180px; opacity:.9}
+  .info-cards{flex-direction:column; align-items:center}
+}
+
+/* Ajustes específicos para pantallas pequeñas (móviles) */
+@media (max-width:520px){
+  .hero{padding:22px 12px}
+  .hero-title{font-size:1.4rem}
+  .hero-sub{font-size:0.95rem}
+  .hero-decor{display:none}
+
+  .invitation-container{padding:18px}
+  .card{width:100%; max-width:100%; padding:14px}
+  .invite-title{font-size:1.25rem}
+  .invite-text{font-size:0.95rem}
+
+  /* Botones apilados y full-width para tocar fácilmente */
+  .actions{flex-direction:column; gap:8px}
+  .btn{width:100%; padding:12px 14px; font-size:1rem}
+  .btn-primary{padding:12px 14px}
+
+  /* Tarjetas de info ocupan todo el ancho y menos separación */
+  .info-cards{flex-direction:column; gap:12px; padding:0 8px}
+
+  /* Footer más compacto */
+  .footer{padding:14px; font-size:0.95rem}
+}
